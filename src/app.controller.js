@@ -43,7 +43,9 @@ import { globalLimiter }          from './middlewares/rateLimiter.middleware.js'
 const app = express();
 
 app.use(cors({
-  origin     : process.env.CLIENT_URL || '*',
+  origin: (origin, callback) => {
+    callback(null, true);
+  },
   credentials: true,
 }));
 
