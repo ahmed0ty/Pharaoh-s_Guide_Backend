@@ -1,11 +1,5 @@
 import { ApiResponse } from '../utils/apiResponse.util.js';
 
-/**
- * الاستخدام: validate(schema) — schema من أي مكتبة زي Joi أو Zod
- * 
- * Joi  → schema.validate(data)
- * Zod  → schema.safeParse(data)
- */
 export const validate = (schema, source = 'body') => (req, res, next) => {
   const data = req[source];
 
@@ -32,14 +26,13 @@ export const validate = (schema, source = 'body') => (req, res, next) => {
       }));
       return ApiResponse.validationError(res, errors);
     }
-    req[source] = result.data; // بيانات نظيفة بعد الـ parse
+    req[source] = result.data; 
     return next();
   }
 
   next();
 };
 
-// تنظيف بسيط من XSS بدون مكتبة خارجية
 export const sanitize = (req, res, next) => {
   const clean = (obj) => {
     if (typeof obj !== 'object' || !obj) return obj;

@@ -1,9 +1,9 @@
 const COLORS = {
-  GET    : '\x1b[32m',  // أخضر
-  POST   : '\x1b[34m',  // أزرق
-  PUT    : '\x1b[33m',  // أصفر
+  GET    : '\x1b[32m', 
+  POST   : '\x1b[34m',  
+  PUT    : '\x1b[33m',  
   PATCH  : '\x1b[33m',
-  DELETE : '\x1b[31m',  // أحمر
+  DELETE : '\x1b[31m',  
   RESET  : '\x1b[0m',
 };
 

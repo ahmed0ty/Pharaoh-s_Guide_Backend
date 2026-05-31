@@ -25,8 +25,7 @@ const createRateLimiter = ({ windowSec, max, keyPrefix, message }) => {
 
       next();
     } catch (err) {
-      // لو Redis فشل، اعمل pass-through بدل ما توقف الخدمة
-      console.error('Rate limiter error:', err.message);
+      logger.error('Rate limiter error:', err.message);
       next();
     }
   };
