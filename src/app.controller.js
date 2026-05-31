@@ -1,4 +1,3 @@
-
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -8,12 +7,14 @@ import userRoutes     from './modules/user/user.routes.js';
 import placesRoutes   from './modules/places/places.routes.js';
 import aiRoutes       from './modules/ai/ai.routes.js';
 import tripPlanRoutes from './modules/tripPlan/tripPlan.routes.js';
-
 import { errorHandler, notFound } from './middlewares/errorHandler.middleware.js';
 import { logger }                 from './middlewares/logger.middleware.js';
 import { globalLimiter }          from './middlewares/rateLimiter.middleware.js';
+import swaggerUi       from 'swagger-ui-express';
+import { swaggerSpec } from './config/swagger.js';
 
 const app = express();
+
 app.use(helmet());
 app.use(cors({
   origin: (origin, callback) => {
@@ -27,7 +28,10 @@ app.use(cookieParser());
 app.use(logger);
 app.use(globalLimiter);
 
+// ── Swagger Docs ──────────────────────────────────────────────
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+// ── Routes ────────────────────────────────────────────────────
 app.use('/api/auth',       authRoutes);
 app.use('/api/user',       userRoutes);
 app.use('/api/places',     placesRoutes);
@@ -37,7 +41,6 @@ app.use('/api/trip-plans', tripPlanRoutes);
 app.get('/', (req, res) => {
   res.json({ message: 'Egyptian Tourist API is running' });
 });
-
 
 app.use(notFound);
 app.use(errorHandler);
