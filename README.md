@@ -1,4 +1,4 @@
-cat > /mnt/user-data/outputs/README.md << 'READMEEOF'
+
 # 🏺 Pharaoh's Guide — Backend
 
 <div align="center">
