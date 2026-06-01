@@ -4,18 +4,18 @@ export const validate = (schema, source = 'body') => (req, res, next) => {
   const data = req[source];
 
   // ── Zod أولاً ──
-  if (typeof schema.safeParse === 'function') {
-    const result = schema.safeParse(data);
-    if (!result.success) {
-      const errors = result.error.errors.map((e) => ({
-        field  : e.path.join('.'),
-        message: e.message,
-      }));
-      return ApiResponse.validationError(res, errors);
-    }
-    req[source] = result.data;
-    return next();
+if (typeof schema.safeParse === 'function') {
+  const result = schema.safeParse(data);
+  if (!result.success) {
+    const errors = (result.error?.errors || result.error?.issues || []).map((e) => ({
+      field  : (e.path || []).join('.'),
+      message: e.message,
+    }));
+    return ApiResponse.validationError(res, errors);
   }
+  req[source] = result.data;
+  return next();
+}
 
   // ── Joi ──
   if (typeof schema.validate === 'function') {
