@@ -26,7 +26,7 @@ export const validate = (schema, source = 'body') => (req, res, next) => {
       }));
       return ApiResponse.validationError(res, errors);
     }
-    req[source] = result.data; 
+    req[source] = result.data;
     return next();
   }
 
@@ -34,9 +34,12 @@ export const validate = (schema, source = 'body') => (req, res, next) => {
 };
 
 export const sanitize = (req, res, next) => {
+  const emailFields = ['email'];
+
   const clean = (obj) => {
     if (typeof obj !== 'object' || !obj) return obj;
     for (const key of Object.keys(obj)) {
+      if (emailFields.includes(key)) continue;
       if (typeof obj[key] === 'string') {
         obj[key] = obj[key]
           .replace(/</g,  '&lt;')
