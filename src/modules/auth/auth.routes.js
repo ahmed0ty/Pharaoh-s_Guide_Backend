@@ -53,7 +53,7 @@ const router = Router();
  *       400:
  *         description: Validation error
  */
-router.post('/register', authLimiter, sanitize, upload.single('profileImage'), validate(registerSchema), register);
+router.post('/register', authLimiter, upload.single('profileImage'), sanitize, validate(registerSchema), register);
 
 /**
  * @swagger
