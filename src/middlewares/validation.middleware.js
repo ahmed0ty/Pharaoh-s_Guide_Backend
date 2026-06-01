@@ -54,7 +54,7 @@ export const sanitize = (req, res, next) => {
     return obj;
   };
 
-  clean(req.body);
-  clean(req.query);
+  if (req.body) clean(req.body);
+  if (req.query) clean(req.query);
   next();
 };
