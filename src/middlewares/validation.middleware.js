@@ -3,21 +3,7 @@ import { ApiResponse } from '../utils/apiResponse.util.js';
 export const validate = (schema, source = 'body') => (req, res, next) => {
   const data = req[source];
 
-  // ── Joi ──
-// ── Joi ──
-if (typeof schema.validate === 'function') {
-  const { error } = schema.validate(data, { abortEarly: false });
-  if (error) {
-    const errors = (error.details || []).map((d) => ({
-      field  : d.path.join('.'),
-      message: d.message.replace(/['"]/g, ''),
-    }));
-    return ApiResponse.validationError(res, errors);
-  }
-  return next();
-}
-
-  // ── Zod ──
+  // ── Zod أولاً ──
   if (typeof schema.safeParse === 'function') {
     const result = schema.safeParse(data);
     if (!result.success) {
@@ -28,6 +14,19 @@ if (typeof schema.validate === 'function') {
       return ApiResponse.validationError(res, errors);
     }
     req[source] = result.data;
+    return next();
+  }
+
+  // ── Joi ──
+  if (typeof schema.validate === 'function') {
+    const { error } = schema.validate(data, { abortEarly: false });
+    if (error) {
+      const errors = (error.details || []).map((d) => ({
+        field  : d.path.join('.'),
+        message: d.message.replace(/['"]/g, ''),
+      }));
+      return ApiResponse.validationError(res, errors);
+    }
     return next();
   }
 
