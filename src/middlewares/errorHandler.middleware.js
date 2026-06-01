@@ -41,9 +41,7 @@ export const errorHandler = (err, req, res, next) => {
   if (err.name === 'TokenExpiredError')  { statusCode = 401; message = 'Token expired'; }
 
   // في الـ dev اطبع الـ stack
-  if (process.env.NODE_ENV === 'development') {
-    console.error('💥', err.stack);
-  }
-
+  console.error('💥', err.message, err.stack);
+  
   return ApiResponse.error(res, message, statusCode, errors);
 };
