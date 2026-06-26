@@ -38,6 +38,8 @@ app.use('/api/places',     placesRoutes);
 app.use('/api/ai',         aiRoutes);
 app.use('/api/trip-plans', tripPlanRoutes);
 
+app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
+
 app.get('/', (req, res) => {
   res.json({ message: 'Egyptian Tourist API is running' });
 });
