@@ -51,7 +51,8 @@ export const generateToken = (payload, type) => {
     ? process.env.JWT_SECRET
     : process.env.REFRESH_SECRET;
 
-  const expiresIn = type === 'access' ? '15m' : '7d';
+const expiresIn = type === 'access' ? '7d' : '30d';
+
 
   return jwt.sign(payload, secret, { expiresIn });
 };
