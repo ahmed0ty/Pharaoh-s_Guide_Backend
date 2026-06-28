@@ -12,6 +12,7 @@ import { logger }                 from './middlewares/logger.middleware.js';
 import { globalLimiter }          from './middlewares/rateLimiter.middleware.js';
 import swaggerUi       from 'swagger-ui-express';
 import { swaggerSpec } from './config/swagger.js';
+import adminRouter from './modules/admin/admin.routes.js';
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use('/api/user',       userRoutes);
 app.use('/api/places',     placesRoutes);
 app.use('/api/ai',         aiRoutes);
 app.use('/api/trip-plans', tripPlanRoutes);
+app.use('/api/admin', adminRouter);
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
