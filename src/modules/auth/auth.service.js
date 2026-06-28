@@ -74,6 +74,7 @@ export const loginService = async ({ email, password }) => {
       name        : user.name,
       email       : user.email,
       profileImage: user.profileImage,
+      role        : user.role,        // ← أضف السطر ده
     },
   };
 };
